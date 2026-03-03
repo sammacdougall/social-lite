@@ -1,11 +1,15 @@
 import React from 'react';
 import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+
+const calendarIcon = { ios: 'calendar', android: 'calendar_today', web: 'calendar_today' };
+const peopleTwoIcon = { ios: 'person.2', android: 'people', web: 'people' };
+const peopleThreeIcon = { ios: 'person.3', android: 'groups', web: 'groups' };
+const buildingIcon = { ios: 'building.2', android: 'apartment', web: 'apartment' };
+const globeIcon = { ios: 'globe', android: 'public', web: 'public' };
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -14,55 +18,51 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
+        headerShown: false,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          title: 'Private',
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <SymbolView name={calendarIcon} tintColor={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="duo"
         options={{
-          title: 'Tab Two',
+          title: 'Duo',
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
+            <SymbolView name={peopleTwoIcon} tintColor={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="group"
+        options={{
+          title: 'Group',
+          tabBarIcon: ({ color }) => (
+            <SymbolView name={peopleThreeIcon} tintColor={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="community"
+        options={{
+          title: 'Community',
+          tabBarIcon: ({ color }) => (
+            <SymbolView name={buildingIcon} tintColor={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="public"
+        options={{
+          title: 'Public',
+          tabBarIcon: ({ color }) => (
+            <SymbolView name={globeIcon} tintColor={color} size={24} />
           ),
         }}
       />
